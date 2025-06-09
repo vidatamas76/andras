@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bandi a kopasz romboló!!!</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7; /* Világosabb háttér */
+        }
+        /* Hozzáadtam a Geru Hungária oldalán látható színeket */
+        .text-geru-blue {
+            color: #0056b3; /* Sötétebb kék, mint az eredeti .007bff */
+        }
+        .bg-geru-blue {
+            background-color: #0056b3;
+        }
+        .border-geru-blue {
+            border-color: #0056b3;
+        }
+        .bg-geru-dark-blue {
+            background-color: #212529; /* Sötét szürke/kék sávokhoz */
+        }
+        .text-geru-accent {
+            color: #ffc107; /* Sárga/narancs kiemeléshez */
+        }
+        .bg-geru-accent {
+            background-color: #ffc107;
+        }
+        .hover\:bg-geru-accent-dark:hover {
+            background-color: #e0a800; /* Sötétebb sárga/narancs hover állapotra */
+        }
+        /* Fejléc Hero szekció szövegének pozicionálása és középre igazítása */
+        .hero-text-container {
+            position: relative;
+            z-index: 10; /* Biztosítja, hogy a szöveg a háttérkép felett legyen */
+            text-align: center;
+            padding: 0 1rem; /* px-4 */
+            max-width: 90%; /* Hogy ne nyúljon túl szélesre kis képernyőkön */
+            margin: 0 auto; /* Középre igazítás */
+            display: flex; /* Flexbox használata a tartalom függőleges igazításához */
+            flex-direction: column;
+            justify-content: center; /* Függőlegesen középre igazítás */
+            align-items: center; /* Vízszintesen középre igazítás */
+            height: 100%; /* Kitölti a szekció magasságát */
+        }
+        /* Szöveg körvonal a Hero szekcióban */
+        .hero-text-container h1,
+        .hero-text-container p {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Fekete árnyék a szöveg mögött */
+        }
+        /* Mobil nézethez optimalizálás, ha szükséges */
+        @media (max-width: 768px) {
+            .hero-text-container h1 {
+                font-size: 2.5rem; /* Kisebb betűméret mobilra */
+            }
+            .hero-text-container p {
+                font-size: 1.125rem; /* Kisebb betűméret mobilra */
+            }
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+
+    <!-- Navigációs sáv -->
+    <nav class="bg-geru-dark-blue shadow-md py-4 px-6 md:px-12 fixed w-full z-10 top-0 rounded-b-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-white text-2xl font-bold rounded-md p-2 hover:opacity-80 transition-opacity">
+                Balázs András
+            </a>
+            <div class="hidden md:flex space-x-6">
+                <a href="#home" class="text-gray-300 hover:text-geru-accent font-medium transition-colors rounded-md p-2">Főoldal</a>
+                <a href="#about" class="text-gray-300 hover:text-geru-accent font-medium transition-colors rounded-md p-2">Rólam</a>
+                <a href="#services" class="text-gray-300 hover:text-geru-accent font-medium transition-colors rounded-md p-2">Szolgáltatások</a>
+                <a href="#contact" class="text-gray-300 hover:text-geru-accent font-medium transition-colors rounded-md p-2">Kapcsolat</a>
+            </div>
+            <!-- Mobil menü gomb -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-geru-accent focus:outline-none p-2 rounded-md">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+        <!-- Mobil menü (alapból rejtett) -->
+        <div id="mobile-menu" class="md:hidden hidden mt-4 flex flex-col space-y-2">
+            <a href="#home" class="text-gray-300 hover:text-geru-accent font-medium transition-colors p-2 rounded-md">Főoldal</a>
+            <a href="#about" class="text-gray-300 hover:text-geru-accent font-medium transition-colors p-2 rounded-md">Rólam</a>
+            <a href="#services" class="text-gray-300 hover:text-geru-accent font-medium transition-colors p-2 rounded-md">Szolgáltatások</a>
+            <a href="#contact" class="text-gray-300 hover:text-geru-accent font-medium transition-colors p-2 rounded-md">Kapcsolat</a>
+        </div>
+    </nav>
+
+    <!-- Főoldal szekció (Hero) -->
+    <section id="home" class="relative text-white py-24 md:py-32 flex items-center justify-center min-h-screen-75 rounded-b-lg shadow-lg">
+        <!-- Háttérkép: roof.jpg -->
+        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('roof.jpg')"></div>
+        <!-- Eltávolítottam az áttetsző fekete réteget, mivel a szöveg körvonalát használjuk -->
+        <div class="hero-text-container">
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4 animate-fade-in-down">
+                Üdvözlöm oldalamon!
+            </h1>
+            <p class="text-lg md:text-2xl mb-8 opacity-90 animate-fade-in-up">
+                Egyéni partner a Geru Hungária Kft. projektjeiben – minőség és megbízhatóság a közös sikerekért.
+            </p>
+            <a href="#contact" class="inline-block bg-geru-accent text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-geru-accent-dark transition-all duration-300 transform hover:scale-105 rounded-full">
+                Kapcsolatfelvétel
+            </a>
+        </div>
+    </section>
+
+    <!-- Rólunk szekció -->
+    <section id="about" class="py-16 md:py-24 bg-white rounded-lg shadow-lg mx-auto max-w-7xl mt-8 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div class="text-center md:text-left">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-geru-blue">Részletesebben rólam</h2>
+                <p class="text-lg leading-relaxed mb-6">
+                    Évek óta a <strong class="text-geru-blue">építőiparban</strong> tevékenykedem, és szerencsésnek mondhatom magam, hogy egy dinamikusan fejlődő cég, a <strong class="text-geru-blue">Geru Hungária Kft.</strong> partnerévé válhattam. Ez a partnerség lehetővé teszi számomra, hogy széleskörű szakértelemmel és elkötelezettséggel járuljak hozzá a közös projektek sikeréhez. Célom, hogy a legmagasabb színvonalú szolgáltatásokat nyújtsam, legyen szó projektvezetésről, szaktanácsadásról vagy a kivitelezési folyamatok támogatásáról.
+                </p>
+                <p class="text-lg leading-relaxed">
+                    Hiszek abban, hogy a <strong class="text-geru-blue">precizitás</strong>, a <strong class="text-geru-blue">megbízhatóság</strong> és a <strong class="text-geru-blue">rugalmasság</strong> kulcsfontosságú a sikeres együttműködéshez. Bármely projektbe is kezdek, maximális odaadással és a Geru Hungária Kft. által képviselt értékek mentén dolgozom.
+                </p>
+            </div>
+            <div class="flex justify-center md:justify-end">
+                <!-- Partner fotó: pic.jpg -->
+                <img src="pic.jpg" alt="Partner Fotó" class="rounded-lg shadow-lg w-full max-w-md object-cover h-auto rounded-lg">
+            </div>
+        </div>
+    </section>
+
+    <!-- Miért válasszon engem? szekció -->
+    <section class="py-16 md:py-24 bg-gray-100 rounded-lg shadow-lg mx-auto max-w-7xl mt-8 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-geru-blue">Miért válasszon engem?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Előny 1 -->
+                <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
+                    <div class="text-geru-accent mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Szakértelem és Tapasztalat</h3>
+                    <p class="text-gray-600">
+                        Évek óta a szakmában, széleskörű tudással és gyakorlati tapasztalattal rendelkezem a Geru Hungária Kft. által képviselt területeken.
+                    </p>
+                </div>
+                <!-- Előny 2 -->
+                <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
+                    <div class="text-geru-accent mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 .895 3 2s-1.343 2-3 2-3-.895-3-2 1.343-2 3-2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2zM12 21a9 9 0 110-18 9 9 0 010 18z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Megbízhatóság és Pontosság</h3>
+                    <p class="text-gray-600">
+                        Munkám során a legmagasabb minőségre törekszem, betartom a határidőket és a megállapodásokat.
+                    </p>
+                </div>
+                <!-- Előny 3 -->
+                <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
+                    <div class="text-geru-accent mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Rugalmas Megoldások</h3>
+                    <p class="text-gray-600">
+                        Az egyedi igényekre szabott, rugalmas megközelítéssel biztosítom, hogy minden projekt a lehető legjobban valósuljon meg.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Szolgáltatások szekció -->
+    <section id="services" class="py-16 md:py-24 bg-white rounded-lg shadow-lg mx-auto max-w-7xl mt-8 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-geru-blue">Szolgáltatások</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Szolgáltatás 1 -->
+                <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-geru-accent">Projektmenedzsment</h3>
+                    <p class="text-gray-600">
+                        Teljes körű projektmenedzsment a tervezéstől a kivitelezésig, biztosítva a zökkenőmentes folyamatokat és a határidők betartását.
+                    </p>
+                </div>
+                <!-- Szolgáltatás 2 -->
+                <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-geru-accent">Műszaki Tanácsadás</h3>
+                    <p class="text-gray-600">
+                        Szakértői tanácsadás építőipari és állványozási projektekhez, optimalizálva a költségeket és a hatékonyságot.
+                    </p>
+                </div>
+                <!-- Szolgáltatás 3 -->
+                <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-geru-accent">Kivitelezési Támogatás</h3>
+                    <p class="text-gray-600">
+                        Segítségnyújtás a kivitelezési folyamatok felügyeletében és koordinálásában, a Geru Hungária Kft. minőségi előírásainak megfelelően.
+                    </p>
+                </div>
+                <!-- Szolgáltatás 4 -->
+                <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-geru-accent">Minőségellenőrzés</h3>
+                    <p class="text-gray-600">
+                        Folyamatos minőségellenőrzés a projektek minden fázisában, garantálva a kiváló végeredményt.
+                    </p>
+                </div>
+                <!-- Szolgáltatás 5 -->
+                <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-geru-accent">Kapcsolattartás</h3>
+                    <p class="text-gray-600">
+                        Hatékony kommunikáció és kapcsolattartás az ügyfelekkel, partnerekkel és a projektcsapattal.
+                    </p>
+                </div>
+                <!-- Szolgáltatás 6 -->
+                <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-geru-accent">Adminisztráció</h3>
+                    <p class="text-gray-600">
+                        A projektekhez kapcsolódó adminisztratív feladatok precíz és gyors lebonyolítása.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kapcsolat szekció -->
+    <section id="contact" class="py-16 md:py-24 bg-gray-100 rounded-lg shadow-lg mx-auto max-w-7xl mt-8 px-4 sm:px-6 lg:px-8 mb-8">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-geru-blue">Kapcsolatfelvétel</h2>
+            <div class="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-md rounded-lg">
+                <form action="#" method="POST" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 text-left mb-1">Név</label>
+                        <input type="text" id="name" name="name" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-geru-blue focus:border-geru-blue sm:text-sm rounded-md" placeholder="Teljes neve">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 text-left mb-1">Email</label>
+                        <input type="email" id="email" name="email" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-geru-blue focus:border-geru-blue sm:text-sm rounded-md" placeholder="email@pelda.hu">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 text-left mb-1">Üzenet</label>
+                        <textarea id="message" name="message" rows="5" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-geru-blue focus:border-geru-blue sm:text-sm rounded-md" placeholder="Írja ide üzenetét..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-geru-accent text-white py-3 px-6 rounded-md shadow-md hover:bg-geru-accent-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-geru-accent transition-colors duration-300 rounded-md">
+                        Üzenet elküldése
+                    </button>
+                </form>
+            </div>
+            <div class="mt-12 text-center text-gray-700">
+                <p class="mb-2"><strong>Elérhetőségek:</strong></p>
+                <p>Telefon: <a href="tel:+36708041260" class="text-geru-blue hover:underline">+36 70 804 1260</a></p>
+                <p>Email: <a href="mailto:epitoandras@gmail.com" class="text-geru-blue hover:underline">epitoandras@gmail.com</a></p>
+                <p>Cím: 9643 Jákfa Kossuth utca végén balra</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lábléc -->
+    <footer class="bg-geru-dark-blue text-white py-8 rounded-t-lg">
+        <div class="container mx-auto text-center px-4">
+            <p>&copy; 2025 Vida Tamás. Minden jog fenntartva.</p>
+            <p class="text-sm mt-2">
+                Együttműködésben a <a href="https://geruhungaria.hu/" target="_blank" class="text-geru-accent hover:underline">Geru Hungária Kft.</a>-vel.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobil menü kapcsolása
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Simább görgetés a navigációs linkekre kattintva
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+
+                // Bezárja a mobil menüt kattintás után
+                if (!document.getElementById('mobile-menu').classList.contains('hidden')) {
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
