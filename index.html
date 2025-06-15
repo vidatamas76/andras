@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homlokzat éstető felujítás</title>
+    <title>Homlokzat és tető felújítás</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts - Inter -->
@@ -39,7 +39,7 @@
         /* Fejléc Hero szekció szövegének pozicionálása és középre igazítása */
         .hero-text-container {
             position: relative;
-           // z-index: 10; /* Biztosítja, hogy a szöveg a háttérkép felett legyen */
+            //z-index: 10; /* Biztosítja, hogy a szöveg a háttérkép felett legyen */
             text-align: center;
             padding: 0 1rem; /* px-4 */
             max-width: 90%; /* Hogy ne nyúljon túl szélesre kis képernyőkön */
@@ -338,22 +338,24 @@
         <div class="container mx-auto text-center">
             <h2 class="text-3xl md:text-4xl font-bold mb-12 text-geru-blue">Kapcsolatfelvétel</h2>
             <div class="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-md rounded-lg">
-                <form action="#" method="POST" class="space-y-6">
+                <form id="contact-form" action="#" method="POST" class="space-y-6">
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700 text-left mb-1">Név</label>
-                        <input type="text" id="name" name="name" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-geru-blue focus:border-geru-blue sm:text-sm rounded-md" placeholder="Teljes neve">
+                        <input type="text" id="name" name="name" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-geru-blue focus:border-geru-blue sm:text-sm rounded-md" placeholder="Teljes neve" required>
                     </div>
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700 text-left mb-1">Email</label>
-                        <input type="email" id="email" name="email" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-geru-blue focus:border-geru-blue sm:text-sm rounded-md" placeholder="email@pelda.hu">
+                        <input type="email" id="email" name="email" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-geru-blue focus:border-geru-blue sm:text-sm rounded-md" placeholder="email@pelda.hu" required>
                     </div>
                     <div>
                         <label for="message" class="block text-sm font-medium text-gray-700 text-left mb-1">Üzenet</label>
-                        <textarea id="message" name="message" rows="5" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-geru-blue focus:border-geru-blue sm:text-sm rounded-md" placeholder="Írja ide üzenetét..."></textarea>
+                        <textarea id="message" name="message" rows="5" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-geru-blue focus:border-geru-blue sm:text-sm rounded-md" placeholder="Írja ide üzenetét..." required></textarea>
                     </div>
-                    <button type="submit" class="w-full bg-geru-accent text-white py-3 px-6 rounded-md shadow-md hover:bg-geru-accent-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-geru-accent transition-colors duration-300 rounded-md">
+                    <button type="submit" id="submit-button" class="w-full bg-geru-accent text-white py-3 px-6 rounded-md shadow-md hover:bg-geru-accent-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-geru-accent transition-colors duration-300 rounded-md">
                         Üzenet elküldése
                     </button>
+                    <!-- Üzenetküldés visszajelzés -->
+                    <div id="form-message" class="mt-4 text-center text-sm font-medium hidden"></div>
                 </form>
             </div>
             <div class="mt-12 text-center text-gray-700">
@@ -655,6 +657,45 @@
                     // Az overlay eltávolítását és az auto-scroll folytatását az overlay mouseleave eseménye kezeli.
                 });
             });
+        });
+
+        // Contact form submission handling
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            const submitButton = document.getElementById('submit-button');
+            const formMessage = document.getElementById('form-message');
+
+            // Disable button and show loading text
+            submitButton.disabled = true;
+            submitButton.textContent = 'Küldés folyamatban...';
+            formMessage.classList.add('hidden'); // Hide previous messages
+
+            // Simulate sending message (replace with actual fetch() to your backend)
+            setTimeout(() => {
+                console.log('--- Üzenet elküldve ---');
+                console.log('Név:', name);
+                console.log('Email:', email);
+                console.log('Üzenet:', message);
+                console.log('-------------------------');
+
+                // Show success message
+                formMessage.textContent = 'Üzenet sikeresen elküldve!';
+                formMessage.classList.remove('hidden');
+                formMessage.classList.remove('text-red-500'); // Remove error styling if any
+                formMessage.classList.add('text-green-500'); // Add success styling
+
+                // Reset form
+                document.getElementById('contact-form').reset();
+
+                // Reset button
+                submitButton.disabled = false;
+                submitButton.textContent = 'Üzenet elküldése';
+
+            }, 2000); // Simulate 2-second delay for sending
         });
 
 
