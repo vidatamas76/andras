@@ -39,7 +39,7 @@
         /* Fejléc Hero szekció szövegének pozicionálása és középre igazítása */
         .hero-text-container {
             position: relative;
-            z-index: 10; /* Biztosítja, hogy a szöveg a háttérkép felett legyen */
+            // z-index: 10; /* Biztosítja, hogy a szöveg a háttérkép felett legyen */
             text-align: center;
             padding: 0 1rem; /* px-4 */
             max-width: 90%; /* Hogy ne nyúljon túl szélesre kis képernyőkön */
@@ -67,16 +67,19 @@
 
         /* Slideshow stílusok */
         .slideshow-container {
-            overflow: hidden; /* Elrejti a konténeren kívüli tartalmat */
+            overflow-x: scroll; /* Vízszintes görgetés engedélyezése */
+            overflow-y: hidden; /* Függőleges görgetés letiltása */
             white-space: nowrap; /* Megakadályozza a képek sortörését */
             background-color: #e0e0e0; /* Világosabb háttér a szalaghoz */
             padding: 20px 0;
             box-shadow: inset 0 2px 5px rgba(0,0,0,0.1), inset 0 -2px 5px rgba(0,0,0,0.1); /* Finom árnyék */
+            position: relative; /* Pozicionáláshoz kell */
+            -webkit-overflow-scrolling: touch; /* Simább görgetés iOS-en */
+            /* scroll-behavior: smooth; -- Ezt JS fogja kezelni a manuális görgetésnél */
         }
 
         .slideshow-inner {
             display: inline-block; /* Lehetővé teszi a vízszintes görgetést */
-            animation: slide-left 20s linear infinite; /* Animáció beállítása (40s-ről 20s-re módosítva) */
         }
 
         .slideshow-inner img {
@@ -89,7 +92,10 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Képek árnyéka */
             object-fit: cover; /* A kép kitölti a rendelkezésre álló helyet, megőrizve az arányait */
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border 0.3s ease-in-out; /* Simább átmenet */
-            cursor: pointer; /* Egérkurzor változása kattinthatóra */
+            cursor: grab; /* Egérkurzor változása húzhatóra */
+        }
+        .slideshow-inner img:active {
+            cursor: grabbing; /* Egérkurzor változása húzás közben */
         }
 
         /* Overlay kép stílusai */
@@ -114,26 +120,11 @@
             pointer-events: auto; /* Engedélyezi az interakciót (pl. elmozdítás) */
         }
 
-        /* Animáció a képek balra görgetéséhez */
-        @keyframes slide-left {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-50%); } /* A képek 50%-át görgeti, így a duplikált rész ismétlődik */
-        }
-
-        /* Animáció szüneteltetése hoverre (a slideshow-inner-en lesz kezelve JS-ből) */
-        /* .slideshow-container:hover .slideshow-inner {
-            animation-play-state: paused;
-        } */
-
         /* Mobilra optimalizálás: képek magasságának csökkentése */
         @media (max-width: 768px) {
             .slideshow-inner img {
                 height: 100px; /* Kisebb magasság mobilra */
                 margin: 0 10px;
-            }
-            @keyframes slide-left {
-                0% { transform: translateX(0%); }
-                100% { transform: translateX(-50%); }
             }
         }
     </style>
@@ -244,9 +235,9 @@
     <!-- Slideshow szalag -->
     <section class="py-8 md:py-12 bg-white rounded-lg shadow-lg mx-auto max-w-7xl mt-8 px-0 sm:px-0 lg:px-0 overflow-hidden">
         <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 text-geru-blue">Galéria</h2>
-        <div class="slideshow-container">
+        <div id="slideshow-container" class="slideshow-container">
             <div id="slideshow-inner" class="slideshow-inner">
-                <!-- Képek duplikálva a folyamatos görgetéshez -->
+                <!-- Képek duplikálva háromszor a folyamatos görgetéshez -->
                 <img src="slide1.jpg" alt="Slide 1" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%201';" />
                 <img src="slide2.jpg" alt="Slide 2" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%202';" />
                 <img src="slide3.jpg" alt="Slide 3" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%203';" />
@@ -255,15 +246,24 @@
                 <img src="slide6.jpg" alt="Slide 6" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%206';" />
                 <img src="slide7.jpg" alt="Slide 7" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%207';" />
                 <img src="slide8.jpg" alt="Slide 8" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%208';" />
-                <!-- Képek ismétlése a folyamatos hatásért -->
-                <img src="slide1.jpg" alt="Slide 1 Copy" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%201%20Copy';" />
-                <img src="slide2.jpg" alt="Slide 2 Copy" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%202%20Copy';" />
-                <img src="slide3.jpg" alt="Slide 3 Copy" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%203%20Copy';" />
-                <img src="slide4.jpg" alt="Slide 4 Copy" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%204%20Copy';" />
-                <img src="slide5.jpg" alt="Slide 5 Copy" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%205%20Copy';" />
-                <img src="slide6.jpg" alt="Slide 6 Copy" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%206%20Copy';" />
-                <img src="slide7.jpg" alt="Slide 7 Copy" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%207%20Copy';" />
-                <img src="slide8.jpg" alt="Slide 8 Copy" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%208%20Copy';" />
+                <!-- Képek másolata 1 -->
+                <img src="slide1.jpg" alt="Slide 1 Copy 1" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%201%20C1';" />
+                <img src="slide2.jpg" alt="Slide 2 Copy 1" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%202%20C1';" />
+                <img src="slide3.jpg" alt="Slide 3 Copy 1" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%203%20C1';" />
+                <img src="slide4.jpg" alt="Slide 4 Copy 1" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%204%20C1';" />
+                <img src="slide5.jpg" alt="Slide 5 Copy 1" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%205%20C1';" />
+                <img src="slide6.jpg" alt="Slide 6 Copy 1" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%206%20C1';" />
+                <img src="slide7.jpg" alt="Slide 7 Copy 1" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%207%20C1';" />
+                <img src="slide8.jpg" alt="Slide 8 Copy 1" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%208%20C1';" />
+                <!-- Képek másolata 2 -->
+                <img src="slide1.jpg" alt="Slide 1 Copy 2" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%201%20C2';" />
+                <img src="slide2.jpg" alt="Slide 2 Copy 2" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%202%20C2';" />
+                <img src="slide3.jpg" alt="Slide 3 Copy 2" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%203%20C2';" />
+                <img src="slide4.jpg" alt="Slide 4 Copy 2" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%204%20C2';" />
+                <img src="slide5.jpg" alt="Slide 5 Copy 2" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%205%20C2';" />
+                <img src="slide6.jpg" alt="Slide 6 Copy 2" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%206%20C2';" />
+                <img src="slide7.jpg" alt="Slide 7 Copy 2" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%207%20C2';" />
+                <img src="slide8.jpg" alt="Slide 8 Copy 2" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%208%20C2';" />
             </div>
         </div>
     </section>
@@ -376,7 +376,7 @@
     </footer>
 
     <script>
-        // Function to update scroll-padding-top and the first section's margin-top based on nav height
+        // Funkció a scroll-padding-top és az első szekció margin-top beállítására a nav magassága alapján
         function updateLayoutForFixedNav() {
             const nav = document.getElementById('main-nav');
             const homeSection = document.getElementById('home');
@@ -424,12 +424,175 @@
             });
         });
 
-        // Slideshow image highlight effect with overlay
+        // Slideshow functionality with seamless looping, manual drag/swipe, and highlight effect
         document.addEventListener('DOMContentLoaded', () => {
-            const slideshowImages = document.querySelectorAll('.slideshow-inner img');
+            const slideshowContainer = document.getElementById('slideshow-container');
             const slideshowInner = document.getElementById('slideshow-inner');
+            const slideshowImages = document.querySelectorAll('.slideshow-inner img');
+
+            let autoScrollAnimationFrame;
+            let manualInteractionTimeout;
+            let isPausedByManual = false; // Flag to track if auto-scroll is paused manually
+
+            const scrollSpeed = 1; // Pixels per animation frame for auto-scroll
+            const manualResumeDelay = 1000; // Milliseconds to wait after manual interaction to resume auto-scroll
+
             let currentOverlayImage = null; // A jelenleg aktív overlay kép referencia
 
+            let singleSetWidth = 0; // Kiszámoljuk az egyedi képsorozat szélességét
+
+            // Function to calculate singleSetWidth after all images are loaded
+            const calculateSingleSetWidth = () => {
+                singleSetWidth = 0;
+                // Sum the width of the first third of the images (original set)
+                // This assumes there are exactly three sets of images, and the first third represents the unique set.
+                for (let i = 0; i < slideshowImages.length / 3; i++) {
+                    const img = slideshowImages[i];
+                    const imgStyle = getComputedStyle(img);
+                    const imgWidth = img.offsetWidth;
+                    const marginLeft = parseFloat(imgStyle.marginLeft) || 0;
+                    const marginRight = parseFloat(imgStyle.marginRight) || 0;
+                    singleSetWidth += imgWidth + marginLeft + marginRight;
+                }
+                console.log('Calculated singleSetWidth:', singleSetWidth);
+            };
+
+            // Load images and then initialize carousel
+            const imageLoadPromises = Array.from(slideshowImages).map(img => {
+                if (img.complete) return Promise.resolve();
+                return new Promise(resolve => {
+                    img.onload = resolve;
+                    img.onerror = resolve; // Resolve even on error to not block
+                });
+            });
+
+            Promise.all(imageLoadPromises).then(() => {
+                calculateSingleSetWidth();
+                // Set initial scroll position to the start of the second set of images for seamless effect
+                slideshowContainer.scrollLeft = singleSetWidth;
+                startAutoScroll(); // Start auto-scroll only after everything is ready
+            });
+
+
+            function startAutoScroll() {
+                // Ensure only one animation frame loop is running
+                if (autoScrollAnimationFrame) cancelAnimationFrame(autoScrollAnimationFrame);
+
+                const animateScroll = () => {
+                    if (isPausedByManual || currentOverlayImage) { // Also pause if magnification overlay is active
+                        autoScrollAnimationFrame = requestAnimationFrame(animateScroll); // Keep the loop alive but paused
+                        return;
+                    }
+
+                    // Increment scrollLeft
+                    slideshowContainer.scrollLeft += scrollSpeed;
+
+                    // When auto-scroll reaches the end of the second set (start of the third), jump back to the start of the second set
+                    // This creates the seamless loop.
+                    if (slideshowContainer.scrollLeft >= singleSetWidth * 2) {
+                        // Use requestAnimationFrame for a "frame-perfect" jump to avoid flicker
+                        requestAnimationFrame(() => {
+                            slideshowContainer.scrollLeft = singleSetWidth;
+                        });
+                    }
+                    autoScrollAnimationFrame = requestAnimationFrame(animateScroll);
+                };
+                autoScrollAnimationFrame = requestAnimationFrame(animateScroll);
+            }
+
+            function pauseAutoScroll() {
+                cancelAnimationFrame(autoScrollAnimationFrame);
+                isPausedByManual = true; // Set flag to true
+                if (manualInteractionTimeout) clearTimeout(manualInteractionTimeout); // Clear previous resume timeout
+            }
+
+            function resumeAutoScrollAfterManual() {
+                if (manualInteractionTimeout) clearTimeout(manualInteractionTimeout);
+                manualInteractionTimeout = setTimeout(() => {
+                    isPausedByManual = false; // Reset flag
+                    startAutoScroll();
+                }, manualResumeDelay);
+            }
+
+            // Manual dragging (mouse and touch) for slideshow container
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            slideshowContainer.addEventListener('mousedown', (e) => {
+                isDown = true;
+                pauseAutoScroll(); // Pause auto-scroll immediately on mousedown
+                slideshowContainer.classList.add('active'); // Optional: visual feedback
+                startX = e.pageX - slideshowContainer.offsetLeft;
+                scrollLeft = slideshowContainer.scrollLeft;
+                // Prevent default drag for images to avoid ghosting
+                e.preventDefault();
+            });
+
+            slideshowContainer.addEventListener('mouseleave', () => {
+                if (isDown) { // Only resume if mouse was down when leaving container
+                    isDown = false;
+                    slideshowContainer.classList.remove('active');
+                    resumeAutoScrollAfterManual();
+                }
+            });
+
+            slideshowContainer.addEventListener('mouseup', () => {
+                isDown = false;
+                slideshowContainer.classList.remove('active');
+                resumeAutoScrollAfterManual(); // Resume auto-scroll after mouse up
+            });
+
+            slideshowContainer.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault(); // Prevent text selection etc.
+                const x = e.pageX - slideshowContainer.offsetLeft;
+                const walk = (x - startX) * 1.5; // Multiplier for faster drag
+                slideshowContainer.scrollLeft = scrollLeft - walk;
+
+                // Seamless looping for manual drag: if scrolled out of the middle section, jump to the equivalent position
+                // When scrolling left and hitting the first copy, jump to the equivalent position in the second copy
+                if (slideshowContainer.scrollLeft < singleSetWidth * 0.5) { // User scrolled into the first duplicate range by 50%
+                    slideshowContainer.scrollLeft += singleSetWidth;
+                }
+                // When scrolling right and hitting the third copy, jump to the equivalent position in the second copy
+                else if (slideshowContainer.scrollLeft > singleSetWidth * 2.5) { // User scrolled past the end of the second set by 50%
+                    slideshowContainer.scrollLeft -= singleSetWidth;
+                }
+            });
+
+            // Touch events for mobile dragging
+            slideshowContainer.addEventListener('touchstart', (e) => {
+                isDown = true;
+                pauseAutoScroll(); // Pause auto-scroll immediately on touchstart
+                startX = e.touches[0].pageX - slideshowContainer.offsetLeft;
+                scrollLeft = slideshowContainer.scrollLeft;
+                // Prevent default touch behavior (like zooming)
+                e.preventDefault();
+            }, { passive: false }); // Use passive: false to allow preventDefault
+
+            slideshowContainer.addEventListener('touchend', () => {
+                isDown = false;
+                resumeAutoScrollAfterManual(); // Resume auto-scroll after touchend
+            });
+
+            slideshowContainer.addEventListener('touchmove', (e) => {
+                if (!isDown) return;
+                e.preventDefault(); // Prevent vertical scrolling
+                const x = e.touches[0].pageX - slideshowContainer.offsetLeft;
+                const walk = (x - startX) * 1.5; // Multiplier for faster drag
+                slideshowContainer.scrollLeft = scrollLeft - walk;
+
+                // Seamless looping for manual drag (same as mousemove)
+                if (slideshowContainer.scrollLeft < singleSetWidth * 0.5) {
+                    slideshowContainer.scrollLeft += singleSetWidth;
+                } else if (slideshowContainer.scrollLeft > singleSetWidth * 2.5) {
+                    slideshowContainer.scrollLeft -= singleSetWidth;
+                }
+            }, { passive: false }); // Use passive: false to allow preventDefault
+
+
+            // Magnification effect
             slideshowImages.forEach(img => {
                 let hoverTimer;
 
@@ -441,7 +604,7 @@
                     // Időzítő indítása 1 másodpercre
                     hoverTimer = setTimeout(() => {
                         // Megállítja a diavetítés animációját
-                        slideshowInner.style.animationPlayState = 'paused';
+                        pauseAutoScroll(); // Use the unified pause function
 
                         // Eltávolítja az előző overlay képet, ha van
                         if (currentOverlayImage) {
@@ -478,7 +641,7 @@
                                 if (currentOverlayImage === overlayImg) {
                                     overlayImg.remove();
                                     currentOverlayImage = null;
-                                    slideshowInner.style.animationPlayState = 'running'; // Folytatja az animációt
+                                    resumeAutoScrollAfterManual(); // Folytatja az automatikus görgetést
                                 }
                             }, 300); // Megegyezik a transition idővel
                         });
@@ -488,12 +651,12 @@
                 img.addEventListener('mouseleave', () => {
                     // Törli az időzítőt, ha az egér elhagyja a képet 1 másodperc előtt
                     clearTimeout(hoverTimer);
-                    // Ha van aktív overlay kép, és az egér elhagyja az eredeti képet, akkor eltávolítja az overlayt
-                    // De csak akkor, ha az egér ténylegesen elhagyta az overlayt is.
-                    // Ezt most az overlayImg saját mouseleave eseménye kezeli.
+                    // Ha van aktív overlay kép, és az egér elhagyta az eredeti képet, akkor is maradjon az overlay.
+                    // Az overlay eltávolítását és az auto-scroll folytatását az overlay mouseleave eseménye kezeli.
                 });
             });
         });
+
 
         // Update layout on page load
         window.onload = updateLayoutForFixedNav;
