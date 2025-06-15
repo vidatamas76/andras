@@ -12,6 +12,7 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f7f7f7; /* Világosabb háttér */
+            /* A scroll-padding-top-ot JS fogja beállítani dinamikusan a html elemen */
         }
         /* Hozzáadtam a Geru Hungária oldalán látható színeket */
         .text-geru-blue {
@@ -63,19 +64,91 @@
                 font-size: 1.125rem; /* Kisebb betűméret mobilra */
             }
         }
+
+        /* Slideshow stílusok */
+        .slideshow-container {
+            overflow: hidden; /* Elrejti a konténeren kívüli tartalmat */
+            white-space: nowrap; /* Megakadályozza a képek sortörését */
+            background-color: #e0e0e0; /* Világosabb háttér a szalaghoz */
+            padding: 20px 0;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1), inset 0 -2px 5px rgba(0,0,0,0.1); /* Finom árnyék */
+        }
+
+        .slideshow-inner {
+            display: inline-block; /* Lehetővé teszi a vízszintes görgetést */
+            animation: slide-left 40s linear infinite; /* Animáció beállítása */
+        }
+
+        .slideshow-inner img {
+            width: auto; /* Kép szélessége dinamikus marad */
+            height: 150px; /* Fix magasság a képeknek, állítható */
+            margin: 0 15px; /* Képek közötti térköz */
+            display: inline-block; /* Képek egymás mellé rendezése */
+            vertical-align: middle; /* Függőlegesen középre igazítás */
+            border-radius: 8px; /* Lekerekített sarkok */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Képek árnyéka */
+            object-fit: cover; /* A kép kitölti a rendelkezésre álló helyet, megőrizve az arányait */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border 0.3s ease-in-out; /* Simább átmenet */
+            cursor: pointer; /* Egérkurzor változása kattinthatóra */
+        }
+
+        /* Overlay kép stílusai */
+        .magnified-overlay-image {
+            position: absolute;
+            max-width: 90vw; /* Max szélesség a viewport szélesség 90%-a */
+            max-height: 90vh; /* Max magasság a viewport magasság 90%-a */
+            border-radius: 8px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
+            border: 3px solid #ffc107; /* Sárga keret kiemelésként */
+            z-index: 9999; /* Legfelülre helyezi */
+            object-fit: contain; /* A kép méretarányosan illeszkedik a konténerbe */
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            transform: scale(1); /* Kezdő méret */
+            opacity: 0; /* Kezdetben rejtett */
+            pointer-events: none; /* Ne blokkolja az alatta lévő elemeket */
+        }
+        /* Aktív állapot (megjelenés, nagyítás) */
+        .magnified-overlay-image.active {
+            transform: scale(2.0); /* Nagyítás mértéke (1.5-ről 2.0-ra növelve) */
+            opacity: 1;
+            pointer-events: auto; /* Engedélyezi az interakciót (pl. elmozdítás) */
+        }
+
+        /* Animáció a képek balra görgetéséhez */
+        @keyframes slide-left {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); } /* A képek 50%-át görgeti, így a duplikált rész ismétlődik */
+        }
+
+        /* Animáció szüneteltetése hoverre (a slideshow-inner-en lesz kezelve JS-ből) */
+        /* .slideshow-container:hover .slideshow-inner {
+            animation-play-state: paused;
+        } */
+
+        /* Mobilra optimalizálás: képek magasságának csökkentése */
+        @media (max-width: 768px) {
+            .slideshow-inner img {
+                height: 100px; /* Kisebb magasság mobilra */
+                margin: 0 10px;
+            }
+            @keyframes slide-left {
+                0% { transform: translateX(0%); }
+                100% { transform: translateX(-50%); }
+            }
+        }
     </style>
 </head>
 <body class="antialiased text-gray-800">
 
     <!-- Navigációs sáv -->
-    <nav class="bg-geru-dark-blue shadow-md py-4 px-6 md:px-12 fixed w-full z-10 top-0 rounded-b-lg">
+    <nav id="main-nav" class="bg-geru-dark-blue shadow-md py-4 px-6 md:px-12 fixed w-full z-10 top-0 rounded-b-lg">
         <div class="container mx-auto flex justify-between items-center">
             <a href="#" class="text-white text-2xl font-bold rounded-md p-2 hover:opacity-80 transition-opacity">
                 Balázs András
             </a>
             <div class="hidden md:flex space-x-6">
                 <a href="#home" class="text-gray-300 hover:text-geru-accent font-medium transition-colors rounded-md p-2">Főoldal</a>
-                <a href="#about" class="text-gray-300 hover:text-geru-accent font-medium transition-colors rounded-md p-2">Rólam</a>
+                <a href="#about" class="text-300 hover:text-geru-accent font-medium transition-colors rounded-md p-2">Rólam</a>
                 <a href="#services" class="text-gray-300 hover:text-geru-accent font-medium transition-colors rounded-md p-2">Szolgáltatások</a>
                 <a href="#contact" class="text-gray-300 hover:text-geru-accent font-medium transition-colors rounded-md p-2">Kapcsolat</a>
             </div>
@@ -97,10 +170,9 @@
     <section id="home" class="relative text-white py-24 md:py-32 flex items-center justify-center min-h-screen-75 rounded-b-lg shadow-lg">
         <!-- Háttérkép: roof.jpg -->
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('roof.jpg')"></div>
-        <!-- Eltávolítottam az áttetsző fekete réteget, mivel a szöveg körvonalát használjuk -->
         <div class="hero-text-container">
             <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4 animate-fade-in-down">
-                Üdvözlöm oldalamon!
+                Üdvözlöm honlapomon!
             </h1>
             <p class="text-lg md:text-2xl mb-8 opacity-90 animate-fade-in-up">
                 Egyéni partner a Geru Hungária Kft. projektjeiben – minőség és megbízhatóság a közös sikerekért.
@@ -165,6 +237,33 @@
                         Az egyedi igényekre szabott, rugalmas megközelítéssel biztosítom, hogy minden projekt a lehető legjobban valósuljon meg.
                     </p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slideshow szalag -->
+    <section class="py-8 md:py-12 bg-white rounded-lg shadow-lg mx-auto max-w-7xl mt-8 px-0 sm:px-0 lg:px-0 overflow-hidden">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 text-geru-blue">Galéria</h2>
+        <div class="slideshow-container">
+            <div id="slideshow-inner" class="slideshow-inner">
+                <!-- Képek duplikálva a folyamatos görgetéshez -->
+                <img src="slide1.jpg" alt="Slide 1" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%201';" />
+                <img src="slide2.jpg" alt="Slide 2" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%202';" />
+                <img src="slide3.jpg" alt="Slide 3" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%203';" />
+                <img src="slide4.jpg" alt="Slide 4" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%204';" />
+                <img src="slide5.jpg" alt="Slide 5" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%205';" />
+                <img src="slide6.jpg" alt="Slide 6" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%206';" />
+                <img src="slide7.jpg" alt="Slide 7" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%207';" />
+                <img src="slide8.jpg" alt="Slide 8" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%208';" />
+                <!-- Képek ismétlése a folyamatos hatásért -->
+                <img src="slide1.jpg" alt="Slide 1 Copy" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%201%20Copy';" />
+                <img src="slide2.jpg" alt="Slide 2 Copy" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%202%20Copy';" />
+                <img src="slide3.jpg" alt="Slide 3 Copy" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%203%20Copy';" />
+                <img src="slide4.jpg" alt="Slide 4 Copy" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%204%20Copy';" />
+                <img src="slide5.jpg" alt="Slide 5 Copy" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%205%20Copy';" />
+                <img src="slide6.jpg" alt="Slide 6 Copy" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%206%20Copy';" />
+                <img src="slide7.jpg" alt="Slide 7 Copy" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%207%20Copy';" />
+                <img src="slide8.jpg" alt="Slide 8 Copy" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/333333?text=Slide%208%20Copy';" />
             </div>
         </div>
     </section>
@@ -255,7 +354,7 @@
     <!-- Lábléc -->
     <footer class="bg-geru-dark-blue text-white py-8 rounded-t-lg">
         <div class="container mx-auto text-center px-4">
-            <p>&copy; 2025 Vida Tamás. Minden jog fenntartva.</p>
+            <p>&copy; 2025 Balázs András. Minden jog fenntartva.</p>
             <p class="text-sm mt-2">
                 Együttműködésben a <a href="https://geruhungaria.hu/" target="_blank" class="text-geru-accent hover:underline">Geru Hungária Kft.</a>-vel.
             </p>
@@ -263,7 +362,20 @@
     </footer>
 
     <script>
-        // Mobil menü kapcsolása
+        // Funkció a scroll-padding-top és az első szekció margin-top beállítására a nav magassága alapján
+        function updateLayoutForFixedNav() {
+            const nav = document.getElementById('main-nav');
+            const homeSection = document.getElementById('home');
+            if (nav && homeSection) {
+                const navHeight = nav.offsetHeight;
+                // Sets scroll-padding-top on the html element for smooth scrolling to anchors
+                document.documentElement.style.scrollPaddingTop = navHeight + 'px';
+                // Sets the margin-top of the first section to prevent overlap on initial load
+                homeSection.style.marginTop = navHeight + 'px';
+            }
+        }
+
+        // Toggle mobile menu
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
             const mobileMenu = document.getElementById('mobile-menu');
             if (mobileMenu.classList.contains('hidden')) {
@@ -271,23 +383,108 @@
             } else {
                 mobileMenu.classList.add('hidden');
             }
+            // Small delay to allow mobile menu animation to complete before recalculating layout
+            setTimeout(updateLayoutForFixedNav, 50); // 50ms delay
         });
 
-        // Simább görgetés a navigációs linkekre kattintva
+        // Smooth scroll for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
 
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const targetId = this.getAttribute('href').substring(1); // Removes '#' character
+                const targetElement = document.getElementById(targetId);
 
-                // Bezárja a mobil menüt kattintás után
+                if (targetElement) {
+                    // scroll-padding-top handles the offset, so just call smooth scroll
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start' // Scrolls to the start of the target element
+                    });
+                }
+
+                // Closes mobile menu after clicking a link
                 if (!document.getElementById('mobile-menu').classList.contains('hidden')) {
                     document.getElementById('mobile-menu').classList.add('hidden');
                 }
             });
         });
+
+        // Slideshow image highlight effect with overlay
+        document.addEventListener('DOMContentLoaded', () => {
+            const slideshowImages = document.querySelectorAll('.slideshow-inner img');
+            const slideshowInner = document.getElementById('slideshow-inner');
+            let currentOverlayImage = null; // A jelenleg aktív overlay kép referencia
+
+            slideshowImages.forEach(img => {
+                let hoverTimer;
+
+                img.addEventListener('mouseenter', () => {
+                    // Törli az előző időzítőt, ha volt
+                    if (hoverTimer) {
+                        clearTimeout(hoverTimer);
+                    }
+                    // Időzítő indítása 1 másodpercre
+                    hoverTimer = setTimeout(() => {
+                        // Megállítja a diavetítés animációját
+                        slideshowInner.style.animationPlayState = 'paused';
+
+                        // Eltávolítja az előző overlay képet, ha van
+                        if (currentOverlayImage) {
+                            currentOverlayImage.remove();
+                            currentOverlayImage = null;
+                        }
+
+                        // Létrehozza az overlay képet
+                        const overlayImg = document.createElement('img');
+                        overlayImg.src = img.src;
+                        overlayImg.alt = img.alt;
+                        overlayImg.classList.add('magnified-overlay-image'); // Alkalmazza az overlay stílusokat
+
+                        // Lekéri az eredeti kép pozícióját
+                        const rect = img.getBoundingClientRect();
+                        overlayImg.style.left = rect.left + window.scrollX + 'px';
+                        overlayImg.style.top = rect.top + window.scrollY + 'px';
+                        overlayImg.style.width = rect.width + 'px';
+                        overlayImg.style.height = rect.height + 'px';
+
+                        document.body.appendChild(overlayImg);
+                        currentOverlayImage = overlayImg;
+
+                        // Aktiválja a nagyítást egy rövid késleltetéssel a sima átmenet érdekében
+                        setTimeout(() => {
+                            overlayImg.classList.add('active');
+                        }, 50);
+
+                        // Eseménykezelő az overlay kép elhagyására
+                        overlayImg.addEventListener('mouseleave', () => {
+                            overlayImg.classList.remove('active');
+                            // Rövid késleltetés, hogy az átmenet lefutása után távolítsa el
+                            setTimeout(() => {
+                                if (currentOverlayImage === overlayImg) {
+                                    overlayImg.remove();
+                                    currentOverlayImage = null;
+                                    slideshowInner.style.animationPlayState = 'running'; // Folytatja az animációt
+                                }
+                            }, 300); // Megegyezik a transition idővel
+                        });
+                    }, 1000); // 1000 ms = 1 másodperc
+                });
+
+                img.addEventListener('mouseleave', () => {
+                    // Törli az időzítőt, ha az egér elhagyja a képet 1 másodperc előtt
+                    clearTimeout(hoverTimer);
+                    // Ha van aktív overlay kép, és az egér elhagyja az eredeti képet, akkor eltávolítja az overlayt
+                    // De csak akkor, ha az egér ténylegesen elhagyta az overlayt is.
+                    // Ezt most az overlayImg saját mouseleave eseménye kezeli.
+                });
+            });
+        });
+
+        // Update layout on page load
+        window.onload = updateLayoutForFixedNav;
+        // Update layout on window resize
+        window.onresize = updateLayoutForFixedNav;
     </script>
 </body>
 </html>
