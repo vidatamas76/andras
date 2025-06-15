@@ -76,7 +76,7 @@
 
         .slideshow-inner {
             display: inline-block; /* Lehetővé teszi a vízszintes görgetést */
-            animation: slide-left 40s linear infinite; /* Animáció beállítása */
+            animation: slide-left 20s linear infinite; /* Animáció beállítása (40s-ről 20s-re módosítva) */
         }
 
         .slideshow-inner img {
@@ -109,7 +109,7 @@
         }
         /* Aktív állapot (megjelenés, nagyítás) */
         .magnified-overlay-image.active {
-            transform: scale(2.0); /* Nagyítás mértéke (1.5-ről 2.0-ra növelve) */
+            transform: scale(2.0); /* Nagyítás mértéke */
             opacity: 1;
             pointer-events: auto; /* Engedélyezi az interakciót (pl. elmozdítás) */
         }
@@ -172,7 +172,7 @@
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('roof.jpg')"></div>
         <div class="hero-text-container">
             <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4 animate-fade-in-down">
-                Üdvözlöm honlapomon!
+                Üdvözlöm oldalamon!
             </h1>
             <p class="text-lg md:text-2xl mb-8 opacity-90 animate-fade-in-up">
                 Egyéni partner a Geru Hungária Kft. projektjeiben – minőség és megbízhatóság a közös sikerekért.
@@ -189,7 +189,7 @@
             <div class="text-center md:text-left">
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-geru-blue">Részletesebben rólam</h2>
                 <p class="text-lg leading-relaxed mb-6">
-                    Évek óta a <strong class="text-geru-blue">építőiparban</strong> tevékenykedem, és szerencsésnek mondhatom magam, hogy egy dinamikusan fejlődő cég, a <strong class="text-geru-blue">Geru Hungária Kft.</strong> partnerévé válhattam. Ez a partnerség lehetővé teszi számomra, hogy széleskörű szakértelemmel és elkötelezettséggel járuljak hozzá a közös projektek sikeréhez. Célom, hogy a legmagasabb színvonalú szolgáltatásokat nyújtsam, legyen szó projektvezetésről, szaktanácsadásról vagy a kivitelezési folyamatok támogatásáról.
+                    Évek óta a <strong class="text-geru-blue">építőiparban</strong> tevékenykedem, különösen specializálódva a <strong class="text-geru-blue">kőműves, zsaluzó, állványozó, burkoló és festő munkálatokra</strong>. Szerencsésnek mondhatom magam, hogy egy dinamikusan fejlődő cég, a <strong class="text-geru-blue">Geru Hungária Kft.</strong> partnerévé válhattam. Ez a partnerség lehetővé teszi számomra, hogy széleskörű szakértelemmel és elkötelezettséggel járuljak hozzá a közös projektek sikeréhez. Célom, hogy a legmagasabb színvonalú szolgáltatásokat nyújtsam, legyen szó projektvezetésről, szaktanácsadásról vagy a kivitelezési folyamatok támogatásáról.
                 </p>
                 <p class="text-lg leading-relaxed">
                     Hiszek abban, hogy a <strong class="text-geru-blue">precizitás</strong>, a <strong class="text-geru-blue">megbízhatóság</strong> és a <strong class="text-geru-blue">rugalmasság</strong> kulcsfontosságú a sikeres együttműködéshez. Bármely projektbe is kezdek, maximális odaadással és a Geru Hungária Kft. által képviselt értékek mentén dolgozom.
@@ -273,42 +273,77 @@
         <div class="container mx-auto text-center">
             <h2 class="text-3xl md:text-4xl font-bold mb-12 text-geru-blue">Szolgáltatások</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Szolgáltatás 1 -->
+                <!-- Szolgáltatás 1: Projektmenedzsment -->
                 <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <h3 class="text-xl font-semibold mb-4 text-geru-accent">Projektmenedzsment</h3>
                     <p class="text-gray-600">
                         Teljes körű projektmenedzsment a tervezéstől a kivitelezésig, biztosítva a zökkenőmentes folyamatokat és a határidők betartását.
                     </p>
                 </div>
-                <!-- Szolgáltatás 2 -->
+                <!-- Szolgáltatás 2: Műszaki Tanácsadás -->
                 <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <h3 class="text-xl font-semibold mb-4 text-geru-accent">Műszaki Tanácsadás</h3>
                     <p class="text-gray-600">
                         Szakértői tanácsadás építőipari és állványozási projektekhez, optimalizálva a költségeket és a hatékonyságot.
                     </p>
                 </div>
-                <!-- Szolgáltatás 3 -->
+                <!-- Szolgáltatás 3: Kivitelezési Támogatás -->
                 <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <h3 class="text-xl font-semibold mb-4 text-geru-accent">Kivitelezési Támogatás</h3>
                     <p class="text-gray-600">
                         Segítségnyújtás a kivitelezési folyamatok felügyeletében és koordinálásában, a Geru Hungária Kft. minőségi előírásainak megfelelően.
                     </p>
                 </div>
-                <!-- Szolgáltatás 4 -->
+                <!-- Szolgáltatás 4: Kőműves munkák -->
+                <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-geru-accent">Kőműves Munkák</h3>
+                    <p class="text-gray-600">
+                        Falazás, vakolás, alapozás és egyéb kőműves feladatok precíz és minőségi kivitelezése.
+                    </p>
+                </div>
+                <!-- Szolgáltatás 5: Zsaluzás -->
+                <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-geru-accent">Zsaluzás</h3>
+                    <p class="text-gray-600">
+                        Vasbeton szerkezetek (födémek, falak, oszlopok) zsaluzása, a terveknek megfelelő, pontos előkészítéssel.
+                    </p>
+                </div>
+                <!-- Szolgáltatás 6: Állványozás -->
+                <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-geru-accent">Állványozás</h3>
+                    <p class="text-gray-600">
+                        Biztonságos és stabil állványrendszerek építése, bontása, valamint bérbeadása minden típusú munkához.
+                    </p>
+                </div>
+                <!-- Szolgáltatás 7: Burkolás -->
+                <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-geru-accent">Burkolás</h3>
+                    <p class="text-gray-600">
+                        Hideg- és melegburkolatok szakszerű lerakása, csempézés, járólapozás, laminált padló telepítése.
+                    </p>
+                </div>
+                <!-- Szolgáltatás 8: Festés -->
+                <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-geru-accent">Festés és Mázolás</h3>
+                    <p class="text-gray-600">
+                        Beltéri és kültéri festési, mázolási munkák, falak előkészítése, glettelése és festése.
+                    </p>
+                </div>
+                <!-- Szolgáltatás 9: Minőségellenőrzés -->
                 <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <h3 class="text-xl font-semibold mb-4 text-geru-accent">Minőségellenőrzés</h3>
                     <p class="text-gray-600">
                         Folyamatos minőségellenőrzés a projektek minden fázisában, garantálva a kiváló végeredményt.
                     </p>
                 </div>
-                <!-- Szolgáltatás 5 -->
+                <!-- Szolgáltatás 10: Kapcsolattartás -->
                 <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <h3 class="text-xl font-semibold mb-4 text-geru-accent">Kapcsolattartás</h3>
                     <p class="text-gray-600">
                         Hatékony kommunikáció és kapcsolattartás az ügyfelekkel, partnerekkel és a projektcsapattal.
                     </p>
                 </div>
-                <!-- Szolgáltatás 6 -->
+                <!-- Szolgáltatás 11: Adminisztráció -->
                 <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 rounded-lg">
                     <h3 class="text-xl font-semibold mb-4 text-geru-accent">Adminisztráció</h3>
                     <p class="text-gray-600">
@@ -362,7 +397,7 @@
     </footer>
 
     <script>
-        // Funkció a scroll-padding-top és az első szekció margin-top beállítására a nav magassága alapján
+        // Function to update scroll-padding-top and the first section's margin-top based on nav height
         function updateLayoutForFixedNav() {
             const nav = document.getElementById('main-nav');
             const homeSection = document.getElementById('home');
